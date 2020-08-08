@@ -1,0 +1,21 @@
+.tabs-wrap{
+    background-color: #f5f5f5 !important;
+}
+.tabs-inner{
+    background-color: #f5f5f5 !important;
+}
+#dlg{
+    height: 370px !important;
+}
+.window{
+    width: 1025px !important;
+}
+.fitem1{
+    margin-left: 210px;
+}
+.fitem2{
+    margin-left: 450px;
+}
+.fitem3{
+    margin-left: 700px;
+}

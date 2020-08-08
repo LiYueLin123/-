@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>供应商管理</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/color.css">
+	<link rel="stylesheet" type="text/css" href="easyui/themes/xyy.css">
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/easyloader.js"></script>
+		<script type="text/javascript">
+		$(function(){
+			//获取url参数
+			var searchURL = window.location.search;
+			searchURL = searchURL.substring(1, searchURL.length);
+			var Name = searchURL.split("&")[0].split("=")[1];			
+			var userName = decodeURIComponent(Name);
+			$('#userName').html(userName);
+		})
+	</script>
+</head>
+<style>
+    #xyy_header{
+       background: #36648B !important;
+	}
+	.layout-expand-west{
+		background: #36648B !important;
+	}
+	.tabs-inner{
+		background: #36648B !important;
+	}
+</style>
+<body class="easyui-layout" style="margin:0 1px;background-color:#f5f5f5 !important;">  
+    <div data-options="region:'north',split:true" style="height:80px;" id="xyy_header">
+	    <div class="easyui-layout" data-options="fit:true">   
+            <div style="float:left;width:40%;margin-top: -10px;">
+			    <img src="img/sj111.png" style="width: 200px;height: 80px;">
+				<!-- <a href="#" style="font-size:16px;color:#fff;text-decoration:none;">福建思嘉</a> -->
+			</div>
+            <div style="float:right;width:56%;">
+				<div class="xyy_tool">	
+					<ul style="float:right;position: relative;right:0;margin:0;">	
+						<li><a href="#"><i class="xyy-ziliao" style="position: absolute;display:block;width: 16px;height: 16px;top: 50%;margin: -8px 12px;"></i><span id="userName"></span></a></li>						
+						<li><a href="login.html"><i class="xyy-tuichu" style="position: absolute;display:block;width: 16px;height: 16px;top: 50%;margin: -8px 12px;"></i>退出登录</a></li>
+					</ul>
+				</div>				
+			</div>			
+        </div>
+	</div>  
+    <div data-options="region:'west',title:'供应商管理平台主菜单',split:true" style="width:200px;">
+	    <div id="menu" class="easyui-accordion" fit="true" border="false">
+            <div title="" data-options="iconCls:'icon-shezhi',selected:true" style="overflow:auto;padding:10px;">
+                <ul id="tt" class="easyui-tree" data-options="animate:true,lines:true">  
+                    <li>  
+                        <span>供应商管理</span>  
+                        <ul>                             
+                            <li>  
+								<a id="CG" onclick="addTab('采购订单','PurFormList.html')">采购订单</a>  
+                            </li>  
+                            <li>  
+								<a onclick="addTabs('收料通知单','MatReceList.html')">收料通知单</a>
+                            </li>
+                        </ul>  
+                    </li>  
+                </ul>
+            </div>
+        </div>
+	
+	</div>  
+    <div data-options="region:'center'" style="background:#fff;border:0;">
+	    <div id="tb" class="easyui-tabs" data-options="tools:'#tab-tools',fit:true">
+			
+		</div>
+		
+	</div>  
+<script type="text/javascript">
+
+
+function getQueryVariable (name) {
+	let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	let arr = window.location.href.split("?");
+	let r = arr[1].match(reg);
+	if (r != null) return unescape(r[2]);
+	return null;
+}
+function addTab(title, url){
+	var supid = getQueryVariable("supid")
+	//alert(supid);
+	var uid = getQueryVariable("uid")
+	var url = 'PurFormList.html?supid='+supid+"&uid=" + uid;
+	if ($('#tb').tabs('exists', title)){
+		$('#tb').tabs('select', title);
+	} else {
+		var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
+		$('#tb').tabs('add',{
+			title:title,
+			content:content,
+			closable:true,
+			tools:[{
+					iconCls:'icon-mini-refresh',
+					handler:function(){
+					$('.panel:visible > .panel-body > iframe').get(0).contentDocument.location.reload(true);	;
+				}
+			}]
+		});
+	}
+}
+function addTabs(title, url){
+	var supid = getQueryVariable("supid")
+	//alert(supid);
+	
+	var url = 'MatReceList.html?supid='+supid;
+	if ($('#tb').tabs('exists', title)){
+		$('#tb').tabs('select', title);
+	} else {
+		var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
+		$('#tb').tabs('add',{
+			title:title,
+			content:content,
+			closable:true,
+			tools:[{
+					iconCls:'icon-mini-refresh',
+					handler:function(){
+					$('.panel:visible > .panel-body > iframe').get(0).contentDocument.location.reload(true);	;
+				}
+			}]
+		});
+	}
+
+}
+</script>
+</body>
+</html>

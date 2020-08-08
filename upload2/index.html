@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/iconfont.css" rel="stylesheet" type="text/css"/>
+    <link href="css/fileUpload.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="js/fileUpload.js"></script>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/xyy.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/easyloader.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+    <body>
+        <style>
+            .dele{
+                background-color: #0099FF !important;
+                color: #FFFFFF !important;
+                padding: 10px !important;
+                font-size: 15px !important;
+                border-radius: 5px !important;
+                cursor: pointer !important;
+            }
+        </style>
+        <div name="GYX">
+            <div id="fileUploadContent" class="fileUploadContent"></div>  
+            <button onclick="testUpload()">提交</button> 
+            <button onclick="del()" id="dele">删除</button> 
+        </div>
+    </body>
+</html>
+<script type="text/javascript">
+ function getParameter(name){
+   var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构建一个含有目标参数的正则表达式对象     
+   var r = window.location.search.substr(1).match(reg);//匹配目标参数  
+   if(r!=null) {
+      return unescape(r[2]); //返回参数值  
+   }
+      return null;
+}
+   var formId = getParameter("formId");
+   var uid = getParameter("uid");
+//    alert(uid);
+    $("#fileUploadContent").initUpload({
+        "uploadUrl":"http://192.168.16.198:8866/erp/Document/UploadDocument?uid="+uid+"&formId="+formId+"&formKey=Purc_PurFormList",//上传文件信息地址
+        //"size":350,//文件大小限制，单位kb,默认不限制
+        //"maxFileNumber":3,//文件个数限制，为整数
+        //"filelSavePath":"",//文件上传地址，后台设置的根目录
+        "beforeUpload":beforeUploadFun,//在上传前执行的函数
+        //"onUpload":onUploadFun，//在上传后执行的函数
+        //autoCommit:true,//文件是否自动上传
+        "fileType":['png','jpg','docx','doc','txt','xls','xlsx']//文件类型限制，默认不限制，注意写的是文件后缀
+    });
+    function beforeUploadFun(opt){
+        opt.otherData =[{"name":"name","value":"zxm"}];
+    }
+    function onUploadFun(opt,data){
+       // alert(data);
+        uploadTools.uploadError(opt);//显示上传错误
+        uploadTools.uploadSuccess(opt);//显示上传成功
+    }
+    function testUpload(){
+    	var opt = uploadTools.getOpt("fileUploadContent");
+    	uploadEvent.uploadFileEvent(opt);
+        window.parent.Refresh();
+        window.parent.Refresh();
+    }
+    function del(){
+        window.parent.dele();
+        window.parent.Refresh();
+        window.parent.Refresh();
+    }
+</script>
